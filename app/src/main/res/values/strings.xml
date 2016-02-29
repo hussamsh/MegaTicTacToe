@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Tic-tac-toe</string>
+    <string name="winner">Winner !!</string>
+    <string name="draw">Draw</string>
+    <string name="winner_player">%1$s is the winner</string>
+    <string name="draw_content">Both of you are too good</string>
+    <string name="play_again">Play again</string>
+    <string name="exit">Exit</string>
+    <string name="full_cell">Cell is Full!!</string>
+    <string name="cell_already_played">Cell already played !!</string>
+    <string name="cell_disabled">Cell disabled !!</string>
+    <string name="game_ended">Game ended</string>
+    <string name="x_player_name">X player name</string>
+    <string name="o_player_name">O player name</string>
+    <string name="colors">Colors</string>
+    <string name="active_cell_color">Active cell color</string>
+    <string name="first_unactive_cell_color">First unactive cell color</string>
+    <string name="second_unactive_cell_color">Second unactive cell color</string>
+    <string name="x_color">X color</string>
+    <string name="y_color">Y color</string>
+</resources>
