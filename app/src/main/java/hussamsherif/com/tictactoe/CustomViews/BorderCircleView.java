@@ -61,7 +61,6 @@ public class BorderCircleView extends FrameLayout {
         }
     }
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

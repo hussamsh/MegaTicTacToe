@@ -94,4 +94,5 @@ public class Board extends CellGridLayout {
         for (XOCell xoCell : XOCells)
             xoCell.setIsGameEnded(true);
     }
+
 }

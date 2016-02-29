@@ -3,14 +3,12 @@
     <declare-styleable name="ColorPreference">
         <attr name="reference" format="enum">
             <enum name="active_cell_color" value="0"/>
-            <enum name="first_unactive_cell_color" value="1"/>
-            <enum name="second_unactive_cell_color" value="2"/>
+            <enum name="odd_cell_preference_color" value="1"/>
+            <enum name="even_cell_preference_color" value="2"/>
             <enum name="x_color" value="3"/>
-            <enum name="y_color" value="4"/>
+            <enum name="o_color" value="4"/>
         </attr>
     </declare-styleable>
 </resources>
-
-
 
 

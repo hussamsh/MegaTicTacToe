@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
@@ -11,44 +12,38 @@
 
         <com.afollestad.materialdialogs.prefs.MaterialEditTextPreference
             android:title="@string/o_player_name"
-            android:key="second_player_name"/>
+            android:key="second_player_name" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/colors"
         android:key="color_preference_category">
 
-        <hussamsherif.com.tictactoe.ColorPreference
+        <hussamsherif.com.tictactoe.CustomViews.ColorPreference
             android:title="@string/active_cell_color"
-            android:widgetLayout="@layout/widget_layout"
             android:key="active_cell_color"
             app:reference="active_cell_color"/>
 
-        <hussamsherif.com.tictactoe.ColorPreference
-            android:title="@string/first_unactive_cell_color"
-            android:widgetLayout="@layout/widget_layout"
-            android:key="first_unactive_cell_color"
-            app:reference="first_unactive_cell_color"/>
+        <hussamsherif.com.tictactoe.CustomViews.ColorPreference
+            android:title="@string/odd_cell_color_preference"
+            android:key="odd_cell_color_preference"
+            app:reference="odd_cell_preference_color"/>
 
-        <hussamsherif.com.tictactoe.ColorPreference
-            android:title="@string/second_unactive_cell_color"
-            android:widgetLayout="@layout/widget_layout"
-            android:key="second_unactive_cell_color"
-            app:reference="second_unactive_cell_color"/>
+        <hussamsherif.com.tictactoe.CustomViews.ColorPreference
+            android:title="@string/even_cell_color_preference"
+            android:key="even_cell_color_preference"
+            app:reference="even_cell_preference_color"/>
 
-        <hussamsherif.com.tictactoe.ColorPreference
+        <hussamsherif.com.tictactoe.CustomViews.ColorPreference
             android:title="@string/x_color"
-            android:widgetLayout="@layout/widget_layout"
             android:key="x_color"
             app:reference="x_color"/>
 
-        <hussamsherif.com.tictactoe.ColorPreference
-            android:title="@string/y_color"
-            android:widgetLayout="@layout/widget_layout"
-            android:key="y_color"
-            app:reference="y_color"/>
+        <hussamsherif.com.tictactoe.CustomViews.ColorPreference
+            android:title="@string/o_color"
+            android:key="o_color"
+            app:reference="o_color" />
 
     </PreferenceCategory>
-
 
 </PreferenceScreen>

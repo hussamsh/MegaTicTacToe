@@ -1,25 +1,57 @@
 package hussamsherif.com.tictactoe.CustomViews.Cells;
 
+import android.animation.Animator;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.support.annotation.IntDef;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.ImageButton;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 
+import hussamsherif.com.tictactoe.Helpers.Bus;
+import hussamsherif.com.tictactoe.BusEvents.ColorChangedEvent;
 import hussamsherif.com.tictactoe.CustomViews.Boards.Board;
 import hussamsherif.com.tictactoe.CustomViews.Viewgroups.CellGridLayout;
-import hussamsherif.com.tictactoe.Interfaces.CellParent;
-import hussamsherif.com.tictactoe.Interfaces.BoardController;
+import hussamsherif.com.tictactoe.CustomViews.Interfaces.CellParent;
+import hussamsherif.com.tictactoe.CustomViews.Interfaces.BoardController;
+import hussamsherif.com.tictactoe.Helpers.Utils;
+import hussamsherif.com.tictactoe.R;
 
 public class XOCell extends CellGridLayout implements CellParent {
 
     private final int CELLS_COUNT = 9;
     private ArrayList<Cell> cells = new ArrayList<>(CELLS_COUNT);
-
     private BoardController parent ;
     private boolean isFull ;
     private boolean isGameEnded ;
+    private boolean isEnabled ;
+    private static int count = 0 ;
+    private int identifier ;
+    private int backgroundUnactiveColor;
+
+    //Initialize Int definitions instead of enums
+    @IntDef({X,O,EMPTY})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface GameValue {}
+    public static final int X = 0;
+    public static final int O = 1;
+    public static final int EMPTY = -1 ;
 
     public XOCell(Context context) {
         super(context);
+        identifier = ++count;
+        backgroundUnactiveColor = Utils.getColor(getContext() , identifier % 2 == 0 ? Utils.EVEN_CELL_COLOR_PREFERENCE
+                : Utils.ODD_CELL_COLOR_PREFERENCE);
         this.parent = (BoardController) getContext();
         for (int i = 0; i < CELLS_COUNT; i++){
             Cell cell = new Cell(context , CellPosition.getGravity(i) , this);
@@ -28,14 +60,30 @@ public class XOCell extends CellGridLayout implements CellParent {
         }
     }
 
+    @Override
+    public void childCellClicked(int gravity, int value) {
+        if (!isFull){
+            if (!checkWinner(gravity))
+                parent.flipTurns(gravity);
+
+            if (checkIfFull() && !parent.isWinnerAnnounced())
+                parent.onDraw();
+
+            isFull = checkIfFull();
+        }
+    }
+
+
     public void disable(){
         for (Cell cell: cells)
             cell.setIsParentEnabled(false);
+        this.isEnabled = false;
     }
 
     public void enable(){
         for (Cell cell: cells)
             cell.setIsParentEnabled(true);
+        this.isEnabled = true;
     }
 
     public void clear(){
@@ -51,21 +99,13 @@ public class XOCell extends CellGridLayout implements CellParent {
     }
 
     @Override
-    public void cellClicked(int gravity , int value) {
-        if (!isFull){
-            if (!checkWinner(gravity))
-                parent.flipTurns(gravity);
-
-            if (checkIfFull() && !parent.isWinnerAnnounced())
-                parent.onDraw();
-
-            isFull = checkIfFull();
-        }
+    public boolean isGameEnded() {
+        return isGameEnded;
     }
 
     @Override
-    public boolean isGameEnded() {
-        return isGameEnded;
+    public int getParentUnactiveColor() {
+        return backgroundUnactiveColor;
     }
 
     @Override
@@ -79,7 +119,7 @@ public class XOCell extends CellGridLayout implements CellParent {
 
     private boolean checkIfFull(){
         for (Cell cell : cells){
-            if (cell.getValue() == Cell.EMPTY)
+            if (cell.getValue() == EMPTY)
                 return false;
         }
         return true;
@@ -141,13 +181,191 @@ public class XOCell extends CellGridLayout implements CellParent {
         }
     }
 
-    private boolean checkIfEqual(@Cell.GameValue int value1 , @Cell.GameValue int value2 , @Cell.GameValue int value3){
-        boolean winnerFound = (value1 != Cell.EMPTY && value1 == value2 && value1 == value3);
+    private boolean checkIfEqual(@GameValue int value1 , @GameValue int value2 , @GameValue int value3){
+        boolean winnerFound = (value1 != EMPTY && value1 == value2 && value1 == value3);
 
         if (winnerFound)
-            parent.onWinnerFound(value1 == Cell.X ? Board.PLAYER_X : Board.PLAYER_O);
+            parent.onWinnerFound(value1 == X ? Board.PLAYER_X : Board.PLAYER_O);
 
         return winnerFound;
     }
 
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void onColorChanged(ColorChangedEvent event){
+        switch (event.getColorPreference()){
+            case Utils.ACTIVE_CELL_COLOR:
+                if (isEnabled)
+                    setCellsBackground(event.getNewColor());
+                break;
+            case Utils.ODD_CELL_COLOR_PREFERENCE:
+                if (identifier%2 !=0){
+                    setCellsBackground(event.getNewColor());
+                    backgroundUnactiveColor = event.getNewColor();
+                }
+                break;
+            case Utils.EVEN_CELL_COLOR_PREFERENCE:
+                if (identifier%2 == 0){
+                    setCellsBackground(event.getNewColor());
+                    backgroundUnactiveColor = event.getNewColor();
+                }
+                break;
+            case Utils.X_COLOR:
+                for (Cell cell : cells)
+                    cell.setXColor(event.getNewColor());
+                break;
+            case Utils.O_COLOR:
+                for (Cell cell : cells)
+                    cell.setYColor(event.getNewColor());
+                break;
+        }
+    }
+
+    private void setCellsBackground(int color){
+        for (Cell cell : cells)
+            cell.setBackgroundColor(color);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Bus.getBus().register(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        Bus.getBus().unregister(this);
+        super.onDetachedFromWindow();
+    }
+
+    protected static class Cell extends ImageButton implements OnClickListener{
+
+        private @GameValue int value ;
+        private @CellPosition.Gravity int gravity ;
+
+        private boolean isClicked ;
+        private boolean isParentEnabled;
+        private CellParent parent;
+        private int currentColor ;
+        private static IconicsDrawable XDrawable ;
+        private static IconicsDrawable ODrawable;
+
+        public Cell(Context context , @CellPosition.Gravity int gravity , CellParent parent) {
+            super(context);
+            this.setValue(EMPTY);
+            this.gravity = gravity;
+            this.parent = parent;
+            setOnClickListener(this);
+            currentColor = (isParentEnabled ? Utils.getColor(getContext() , Utils.ACTIVE_CELL_COLOR) :
+                    parent.getParentUnactiveColor());
+            setBackgroundColor(currentColor);
+            if (XDrawable == null)
+            XDrawable = new IconicsDrawable(getContext())
+                    .icon(GoogleMaterial.Icon.gmd_clear).sizeDp(15).color(Utils.getColor(context , Utils.X_COLOR));
+            if (ODrawable == null)
+            ODrawable = new IconicsDrawable(getContext())
+                    .icon(GoogleMaterial.Icon.gmd_panorama_fish_eye).sizeDp(15).color(Utils.getColor(context , Utils.O_COLOR));
+        }
+
+        public void setIsParentEnabled(boolean isParentEnabled) {
+            this.isParentEnabled = isParentEnabled;
+            final int toColor = (isParentEnabled ? Utils.getColor(getContext() , Utils.ACTIVE_CELL_COLOR) :
+                    parent.getParentUnactiveColor());
+                ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), currentColor, toColor);
+                colorAnimation.setDuration(300);
+                colorAnimation.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {}
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        currentColor = toColor;
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {}
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {}
+                });
+                colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animator) {
+                        setBackgroundColor((int) animator.getAnimatedValue());
+                    }
+                });
+                colorAnimation.start();
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (Board.getCurrentPlayer() == Board.PLAYER_X){
+                //static access because variable X already exists
+                setValue(XOCell.X);
+            }else if (Board.getCurrentPlayer() == Board.PLAYER_O)
+                setValue(O);
+        }
+
+        private void setValue(@GameValue int value){
+            if (value == EMPTY){
+                this.value = EMPTY;
+                setImageDrawable(null);
+                isClicked = false;
+                return;
+            }
+
+            if (parent.isGameEnded()){
+                Snackbar.make(this, getContext().getString(R.string.game_ended), Snackbar.LENGTH_LONG)
+                        .setAction(getContext().getString(R.string.play_again), new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                parent.playAgain();
+                            }
+                        })
+                        .show();
+                return;
+            }
+
+            if (isParentEnabled){
+                if (!isClicked){
+                    if (value == XOCell.X){
+                        this.value = value;
+                        setImageDrawable(XDrawable);
+                    }
+                    else if (value == O){
+                        this.value = value;
+                        setImageDrawable(ODrawable);
+                    }
+                    isClicked = true;
+                    parent.childCellClicked(gravity, value);
+                }else{
+                    Snackbar.make(this , getContext().getString(R.string.cell_already_played) , Snackbar.LENGTH_SHORT).show();
+                }
+            }else
+                Snackbar.make(this , getContext().getString(R.string.cell_disabled) , Snackbar.LENGTH_SHORT).show();
+        }
+
+        @GameValue
+        public int getValue() {
+            return value;
+        }
+
+        public void clear(){
+            setValue(EMPTY);
+        }
+
+        public void setXColor(int color){
+            XDrawable = XDrawable.color(color);
+        }
+
+        public void setYColor(int color){
+            ODrawable = ODrawable.color(color);
+        }
+
+        @Override
+        public void setBackgroundColor(int color) {
+            super.setBackgroundColor(color);
+            currentColor = color;
+        }
+    }
 }

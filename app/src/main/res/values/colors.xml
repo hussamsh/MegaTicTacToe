@@ -8,5 +8,6 @@
     <color name="default_first_unactive_cell_color">#78909C</color>
     <color name="default_second_unactive_cell_color">#424242</color>
     <color name="default_x_color">#FFFFFF</color>
-    <color name="default_y_color">#FFFFFF</color>
+    <color name="default_o_color">#FFFFFF</color>
+
 </resources>

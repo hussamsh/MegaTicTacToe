@@ -1,4 +1,4 @@
-package hussamsherif.com.tictactoe;
+package hussamsherif.com.tictactoe.CustomViews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,16 +6,22 @@ import android.preference.Preference;
 import android.util.AttributeSet;
 import android.view.View;
 
-import hussamsherif.com.tictactoe.CustomViews.BorderCircleView;
+import org.greenrobot.eventbus.Subscribe;
+
+import hussamsherif.com.tictactoe.BusEvents.ColorChangedEvent;
+import hussamsherif.com.tictactoe.Helpers.Bus;
+import hussamsherif.com.tictactoe.Helpers.Utils;
+import hussamsherif.com.tictactoe.R;
 
 public class ColorPreference extends Preference{
 
     private int mKey ;
+    private BorderCircleView borderCircleView ;
 
     public ColorPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setPersistent(false);
-        init(context , attrs);
+        init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -32,11 +38,22 @@ public class ColorPreference extends Preference{
     }
 
     @Override
+    protected void onAttachedToActivity() {
+        Bus.getBus().register(this);
+    }
+
+
+    @Override
+    protected void onPrepareForRemoval() {
+        Bus.getBus().unregister(this);
+        super.onPrepareForRemoval();
+    }
+
+    @Override
     protected void onBindView(View view) {
         super.onBindView(view);
-        String preference = parseKey();
-        BorderCircleView borderCircleView = (BorderCircleView) view.findViewById(R.id.circle);
-        borderCircleView.setBackgroundColor(Utils.getColor(getContext(), preference));
+        borderCircleView = (BorderCircleView) view.findViewById(R.id.circle);
+        borderCircleView.setBackgroundColor(Utils.getColor(getContext(), parseKey()));
     }
 
     @Utils.ColorPreference
@@ -45,15 +62,23 @@ public class ColorPreference extends Preference{
             case 0:
                 return Utils.ACTIVE_CELL_COLOR;
             case 1:
-                return Utils.FIRST_UNACTIVE_CELL_COLOR;
+                return Utils.ODD_CELL_COLOR_PREFERENCE;
             case 2:
-                return Utils.SECOND_UNACTIVE_CELL_COLOR;
+                return Utils.EVEN_CELL_COLOR_PREFERENCE;
             case 3:
                 return Utils.X_COLOR;
             case 4:
-                return Utils.Y_COLOR;
+                return Utils.O_COLOR;
             default:
                 return Utils.ACTIVE_CELL_COLOR;
+        }
+    }
+
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void onColorChanged(ColorChangedEvent event){
+        if (event.getColorPreference().equals(parseKey())){
+            borderCircleView.setBackgroundColor(event.getNewColor());
         }
     }
 }

@@ -14,8 +14,9 @@
     <string name="o_player_name">O player name</string>
     <string name="colors">Colors</string>
     <string name="active_cell_color">Active cell color</string>
-    <string name="first_unactive_cell_color">First unactive cell color</string>
-    <string name="second_unactive_cell_color">Second unactive cell color</string>
+    <string name="odd_cell_color_preference">Odd cell color</string>
+    <string name="even_cell_color_preference">Even cell color</string>
     <string name="x_color">X color</string>
-    <string name="y_color">Y color</string>
+    <string name="o_color">O color</string>
+    <string name="current_player">Current player :</string>
 </resources>

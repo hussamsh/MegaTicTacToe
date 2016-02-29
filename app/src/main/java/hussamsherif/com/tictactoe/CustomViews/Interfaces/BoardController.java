@@ -1,4 +1,4 @@
-package hussamsherif.com.tictactoe.Interfaces;
+package hussamsherif.com.tictactoe.CustomViews.Interfaces;
 
 import hussamsherif.com.tictactoe.CustomViews.Boards.Board;
 import hussamsherif.com.tictactoe.CustomViews.Viewgroups.CellGridLayout;
