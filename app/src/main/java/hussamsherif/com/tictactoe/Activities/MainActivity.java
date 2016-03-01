@@ -2,11 +2,18 @@ package hussamsherif.com.tictactoe.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
+import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -14,10 +21,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import hussamsherif.com.tictactoe.BusEvents.GameStartedEvent;
 import hussamsherif.com.tictactoe.BusEvents.PlayerNameChangedEvent;
+import hussamsherif.com.tictactoe.BusEvents.TimerToggleEvent;
 import hussamsherif.com.tictactoe.CustomViews.Boards.Board;
-import hussamsherif.com.tictactoe.CustomViews.Viewgroups.CellGridLayout;
 import hussamsherif.com.tictactoe.CustomViews.Interfaces.BoardController;
+import hussamsherif.com.tictactoe.CustomViews.Viewgroups.CellGridLayout;
 import hussamsherif.com.tictactoe.Helpers.Bus;
 import hussamsherif.com.tictactoe.Helpers.Utils;
 import hussamsherif.com.tictactoe.R;
@@ -25,22 +34,51 @@ import hussamsherif.com.tictactoe.R;
 public class MainActivity extends AppCompatActivity implements BoardController {
 
     private Board gameBoard ;
-    private boolean isWinnerAnnounced = false ;
     private TextView currentPlayerTextView ;
+    private TextView timerTextView ;
     private String xPlayerName ;
     private String oPlayerName;
-
+    private boolean isWinnerAnnounced = false ;
     @Board.Player int currentPlayer;
+
+    private CountDownTimer countDownTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        xPlayerName = Utils.getPlayerName(this , Utils.PLAYER_X_PREFERENCE);
-        oPlayerName = Utils.getPlayerName(this , Utils.PLAYER_O_PREFERENCE);
+        xPlayerName = PreferenceManager.getDefaultSharedPreferences(this).getString("first_player_name" , "Player X");
+        oPlayerName = PreferenceManager.getDefaultSharedPreferences(this).getString("second_player_name" , "Player O");
         currentPlayer = Board.PLAYER_X;
         currentPlayerTextView = (TextView) findViewById(R.id.current_player_textView);
         currentPlayerTextView.setText(currentPlayer == Board.PLAYER_X ? xPlayerName : oPlayerName);
+        timerTextView = (TextView) findViewById(R.id.timer_textView);
+//        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("enable_timer_preference" , false))
         gameBoard = (Board) findViewById(R.id.game_board);
+        final View startButton = findViewById(R.id.start_button);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameBoard.start();
+                startButton.setVisibility(View.GONE);
+                View view = findViewById(R.id.button_layout);
+                view.setVisibility(View.GONE);
+            }
+        });
+
+
+        countDownTimer = new CountDownTimer(PreferenceManager.getDefaultSharedPreferences(this).getInt("timer_preference" , 0) * 1000 ,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timerTextView.setText(Utils.convertToReadableTime(millisUntilFinished));
+            }
+
+            @Override
+            public void onFinish() {
+                timerTextView.setText("Timer finished");
+                gameBoard.randomClick();
+            }
+        };
         Bus.getBus().register(this);
     }
 
@@ -50,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements BoardController {
             gameBoard.flipTurns(gravity);
             animatePlayerNameChange(currentPlayer == Board.PLAYER_X? oPlayerName : xPlayerName);
             currentPlayer = currentPlayer == Board.PLAYER_X ? Board.PLAYER_O: Board.PLAYER_X;
+            resetTimer();
         }
         else
             onDraw();
@@ -57,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements BoardController {
 
     private void animatePlayerNameChange(final String nextPlayer){
         Animation in = new AlphaAnimation(0.0f , 1.0f);
-        in.setDuration(1000);
+        in.setDuration(500);
         in.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -119,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements BoardController {
     public void restartGame() {
         isWinnerAnnounced = false;
         gameBoard.restart();
+        animatePlayerNameChange(xPlayerName);
     }
 
     @Override
@@ -170,7 +210,51 @@ public class MainActivity extends AppCompatActivity implements BoardController {
             if (currentPlayer == Board.PLAYER_O)
                 currentPlayerTextView.setText(xPlayerName);
         }
+    }
 
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void onTimerToggle(TimerToggleEvent event){
+        switch (event.getState()){
+            case TimerToggleEvent.OFF:
+                countDownTimer.cancel();
+                timerTextView.setText(getString(R.string.timer_disabled));
+                break;
+            case TimerToggleEvent.ON:
+                resetTimer();
+                break;
+            case TimerToggleEvent.COUNT_TIME_CHANGED:
+                Utils.Log("heard you");
+                countDownTimer.cancel();
+                countDownTimer = new CountDownTimer(PreferenceManager.getDefaultSharedPreferences(this).getInt("timer_preference" , 0) *1000 , 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        timerTextView.setText(Utils.convertToReadableTime(millisUntilFinished));
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        timerTextView.setText("Timer finished");
+                        gameBoard.randomClick();
+                    }
+                }.start();
+
+        }
+    }
+
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void gameStarted(GameStartedEvent event){
+        resetTimer();
+    }
+
+    private void resetTimer(){
+        if (countDownTimer != null)
+            countDownTimer.cancel();
+
+
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("enable_timer_preference" , false))
+            countDownTimer.start();
     }
 }
 

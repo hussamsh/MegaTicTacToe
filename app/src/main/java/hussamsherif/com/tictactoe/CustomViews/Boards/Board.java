@@ -7,9 +7,12 @@ import android.util.AttributeSet;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Random;
 
+import hussamsherif.com.tictactoe.BusEvents.GameStartedEvent;
 import hussamsherif.com.tictactoe.CustomViews.Viewgroups.CellGridLayout;
 import hussamsherif.com.tictactoe.CustomViews.Cells.XOCell;
+import hussamsherif.com.tictactoe.Helpers.Bus;
 
 public class Board extends CellGridLayout {
 
@@ -39,8 +42,6 @@ public class Board extends CellGridLayout {
             XOCells.add(xoCell);
             addView(xoCell);
         }
-        activeCell = XOCells.get(4);
-        activeCell.enable();
     }
 
     private void enableCellAt(int gravity) {
@@ -50,7 +51,11 @@ public class Board extends CellGridLayout {
     }
 
     private void disableCurrentCell() {
-        activeCell.disable();
+        if (activeCell != null)
+            activeCell.disable();
+        else
+            for (XOCell xoCell :XOCells)
+                xoCell.disable();
     }
 
     public void flipTurns(@CellPosition.Gravity int gravity){
@@ -81,13 +86,20 @@ public class Board extends CellGridLayout {
         CURRENT_PLAYER = currentPlayer;
     }
 
+    public void start(){
+        for (XOCell xoCell : XOCells)
+            xoCell.enable();
+
+        Bus.getBus().post(new GameStartedEvent());
+    }
 
     public void restart(){
         for (XOCell xoCell : XOCells)
             xoCell.clear();
 
-        disableCurrentCell();
-        enableCellAt(CellPosition.CENTER);
+        setCurrentPlayer(PLAYER_X);
+        activeCell = null;
+        start();
     }
 
     public void disable(){
@@ -95,4 +107,19 @@ public class Board extends CellGridLayout {
             xoCell.setIsGameEnded(true);
     }
 
+    public void randomClick(){
+        if (activeCell == null){
+            while (true){
+                Random rand = new Random();
+                int cellIndex = rand.nextInt(9);
+                XOCell randomCell = XOCells.get(cellIndex);
+                if (!randomCell.isFull()){
+                    randomCell.randomClick();
+                    break;
+                }
+            }
+        }else if (!activeCell.isFull()){
+            activeCell.randomClick();
+        }
+    }
 }

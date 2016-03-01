@@ -12,11 +12,21 @@
     <string name="game_ended">Game ended</string>
     <string name="x_player_name">X player name</string>
     <string name="o_player_name">O player name</string>
-    <string name="colors">Colors</string>
+    <string name="colors_category">Colors</string>
+    <string name="timer_category">Timer</string>
+    <string name="set_timer">Set timer</string>
+    <string name="timer_summary">Set timer for each player turn</string>
     <string name="active_cell_color">Active cell color</string>
     <string name="odd_cell_color_preference">Odd cell color</string>
     <string name="even_cell_color_preference">Even cell color</string>
     <string name="x_color">X color</string>
     <string name="o_color">O color</string>
     <string name="current_player">Current player :</string>
+    <string name="seconds">Seconds</string>
+    <string name="timer_dialog_title">Set player timer</string>
+    <string name="set">Set</string>
+    <string name="enable_timer">Enable timer</string>
+    <string name="enable_timer_summary">Toggle timer</string>
+    <string name="timer_disabled">Timer disabled</string>
+    <string name="start_game">Start Game</string>
 </resources>

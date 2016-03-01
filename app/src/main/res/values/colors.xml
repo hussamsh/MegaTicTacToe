@@ -5,9 +5,11 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="default_active_cell_color">#AD1457</color>
-    <color name="default_first_unactive_cell_color">#78909C</color>
-    <color name="default_second_unactive_cell_color">#424242</color>
+    <color name="default_odd_cell_color">#78909C</color>
+    <color name="default_even_cell_color">#424242</color>
     <color name="default_x_color">#FFFFFF</color>
     <color name="default_o_color">#FFFFFF</color>
+
+    <color name="shade">#CCB0BEC5</color>
 
 </resources>

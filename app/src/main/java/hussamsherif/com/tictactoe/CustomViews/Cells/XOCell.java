@@ -4,8 +4,10 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -17,7 +19,9 @@ import org.greenrobot.eventbus.Subscribe;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Random;
 
+import hussamsherif.com.tictactoe.Color;
 import hussamsherif.com.tictactoe.Helpers.Bus;
 import hussamsherif.com.tictactoe.BusEvents.ColorChangedEvent;
 import hussamsherif.com.tictactoe.CustomViews.Boards.Board;
@@ -43,15 +47,16 @@ public class XOCell extends CellGridLayout implements CellParent {
     @IntDef({X,O,EMPTY})
     @Retention(RetentionPolicy.SOURCE)
     public @interface GameValue {}
-    public static final int X = 0;
     public static final int O = 1;
+    public static final int X = 0;
     public static final int EMPTY = -1 ;
 
     public XOCell(Context context) {
         super(context);
         identifier = ++count;
-        backgroundUnactiveColor = Utils.getColor(getContext() , identifier % 2 == 0 ? Utils.EVEN_CELL_COLOR_PREFERENCE
-                : Utils.ODD_CELL_COLOR_PREFERENCE);
+        boolean isEven = identifier%2 ==0;
+        backgroundUnactiveColor = PreferenceManager.getDefaultSharedPreferences(context).getInt(isEven ? "even_cell_color_preference" :
+                "odd_cell_color_preference" , ContextCompat.getColor(context , isEven ? R.color.default_even_cell_color : R.color.default_odd_cell_color));
         this.parent = (BoardController) getContext();
         for (int i = 0; i < CELLS_COUNT; i++){
             Cell cell = new Cell(context , CellPosition.getGravity(i) , this);
@@ -93,6 +98,17 @@ public class XOCell extends CellGridLayout implements CellParent {
         setIsGameEnded(false);
     }
 
+    public void randomClick(){
+        while (true) {
+            Random rand = new Random();
+            int cellIndex = rand.nextInt(9);
+            Cell randomCell = cells.get(cellIndex);
+            if (!randomCell.isClicked) {
+                randomCell.performClick();
+                break;
+            }
+        }
+    }
 
     public boolean isFull() {
         return isFull;
@@ -194,31 +210,35 @@ public class XOCell extends CellGridLayout implements CellParent {
     @SuppressWarnings("unused")
     public void onColorChanged(ColorChangedEvent event){
         switch (event.getColorPreference()){
-            case Utils.ACTIVE_CELL_COLOR:
+            case Color.ACTIVE_CELL_COLOR:
                 if (isEnabled)
                     setCellsBackground(event.getNewColor());
                 break;
-            case Utils.ODD_CELL_COLOR_PREFERENCE:
-                if (identifier%2 !=0){
+            case Color.ODD_CELL_COLOR:
+                if (identifier%2 !=0 && !isEnabled){
                     setCellsBackground(event.getNewColor());
                     backgroundUnactiveColor = event.getNewColor();
                 }
                 break;
-            case Utils.EVEN_CELL_COLOR_PREFERENCE:
-                if (identifier%2 == 0){
+            case Color.EVEN_CELL_COLOR:
+                if (identifier%2 == 0 && !isEnabled){
                     setCellsBackground(event.getNewColor());
                     backgroundUnactiveColor = event.getNewColor();
                 }
                 break;
-            case Utils.X_COLOR:
+            case Color.X_COLOR:
                 for (Cell cell : cells)
                     cell.setXColor(event.getNewColor());
                 break;
-            case Utils.O_COLOR:
+            case Color.O_COLOR:
                 for (Cell cell : cells)
                     cell.setYColor(event.getNewColor());
                 break;
         }
+    }
+
+    public boolean isCellEnabled() {
+        return isEnabled;
     }
 
     private void setCellsBackground(int color){
@@ -256,20 +276,20 @@ public class XOCell extends CellGridLayout implements CellParent {
             this.gravity = gravity;
             this.parent = parent;
             setOnClickListener(this);
-            currentColor = (isParentEnabled ? Utils.getColor(getContext() , Utils.ACTIVE_CELL_COLOR) :
+            currentColor = (isParentEnabled ? PreferenceManager.getDefaultSharedPreferences(context).getInt("active_cell_color" , ContextCompat.getColor(context , R.color.default_active_cell_color)) :
                     parent.getParentUnactiveColor());
             setBackgroundColor(currentColor);
             if (XDrawable == null)
             XDrawable = new IconicsDrawable(getContext())
-                    .icon(GoogleMaterial.Icon.gmd_clear).sizeDp(15).color(Utils.getColor(context , Utils.X_COLOR));
+                    .icon(GoogleMaterial.Icon.gmd_clear).sizeDp(15).color(PreferenceManager.getDefaultSharedPreferences(context).getInt("x_color" , ContextCompat.getColor(context , R.color.default_x_color)));
             if (ODrawable == null)
             ODrawable = new IconicsDrawable(getContext())
-                    .icon(GoogleMaterial.Icon.gmd_panorama_fish_eye).sizeDp(15).color(Utils.getColor(context , Utils.O_COLOR));
+                    .icon(GoogleMaterial.Icon.gmd_panorama_fish_eye).sizeDp(15).color(PreferenceManager.getDefaultSharedPreferences(context).getInt("o_color" , ContextCompat.getColor(context , R.color.default_o_color)));
         }
 
         public void setIsParentEnabled(boolean isParentEnabled) {
             this.isParentEnabled = isParentEnabled;
-            final int toColor = (isParentEnabled ? Utils.getColor(getContext() , Utils.ACTIVE_CELL_COLOR) :
+            final int toColor = (isParentEnabled ? PreferenceManager.getDefaultSharedPreferences(getContext()).getInt("active_cell_color" , ContextCompat.getColor(getContext() , R.color.default_active_cell_color)) :
                     parent.getParentUnactiveColor());
                 ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), currentColor, toColor);
                 colorAnimation.setDuration(300);
