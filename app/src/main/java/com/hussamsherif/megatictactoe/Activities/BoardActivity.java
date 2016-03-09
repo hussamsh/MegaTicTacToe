@@ -1,6 +1,7 @@
 package com.hussamsherif.megatictactoe.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -24,7 +25,6 @@ public class BoardActivity extends Activity implements GameEventsListener {
     private String oPlayerName;
 
     public static final String AI_PLAYER = "ai_player";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

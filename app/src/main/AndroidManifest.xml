@@ -8,9 +8,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.BoardActivity">
-        </activity>
-        <activity android:name=".Activities.SettingActivity"
+        <activity android:name=".Activities.BoardActivity"></activity>
+        <activity
+            android:name=".Activities.SettingActivity"
             android:parentActivityName=".Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -23,6 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.WelcomeActivity"
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>

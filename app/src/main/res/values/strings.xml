@@ -53,4 +53,6 @@
     <string name="player_turn">turn</string>
     <string name="settings_activity">Settings</string>
     <string name="your">Your</string>
+    <string name="last_welcome_summary">The best way to understand the game is by playing it , so why don\'t you go ahead and Enjoy!</string>
+    <string name="start_playing">Start Playing!</string>
 </resources>
