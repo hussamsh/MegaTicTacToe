@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#C0CA33</color>
+    <color name="colorPrimaryDark">#9E9D24</color>
+    <color name="colorAccent">#FF5722</color>
+
+    <color name="background_color">#D7CCC8</color>
+
+    <color name="default_active_cell_color">#9E9D24</color>
+    <color name="default_odd_cell_color">#8D6E63</color>
+    <color name="default_even_cell_color">#5D4037</color>
+    <color name="default_x_color">#FFFFFF</color>
+    <color name="default_o_color">#FFFFFF</color>
+
+    <color name="shade">#CCB0BEC5</color>
+
+</resources>

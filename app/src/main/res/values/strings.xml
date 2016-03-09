@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Mega Tic-tac-toe</string>
+    <string name="winner">Winner !!</string>
+    <string name="draw">Draw</string>
+    <string name="winner_player">%1$s is the winner</string>
+    <string name="draw_content">Both of you are too good</string>
+    <string name="play_again">Play again</string>
+    <string name="exit">Exit</string>
+    <string name="full_cell">Cell is Full!!</string>
+    <string name="cell_already_played">Cell already played !!</string>
+    <string name="cell_disabled">Cell disabled !!</string>
+    <string name="game_ended">Game ended</string>
+    <string name="x_player_name">X player name</string>
+    <string name="o_player_name">O player name</string>
+    <string name="x_player">X player</string>
+    <string name="o_player">O player</string>
+    <string name="colors_category">Colors</string>
+    <string name="timer_category">Timer</string>
+    <string name="set_timer">Set timer</string>
+    <string name="timer_summary">Set timer for each player turn</string>
+    <string name="active_cell_color">Active cell color</string>
+    <string name="odd_cell_color_preference">Odd cell color</string>
+    <string name="even_cell_color_preference">Even cell color</string>
+    <string name="x_color">X color</string>
+    <string name="o_color">O color</string>
+    <string name="seconds">Seconds</string>
+    <string name="timer_dialog_title">Set player timer</string>
+    <string name="set">Set</string>
+    <string name="enable_timer">Enable timer</string>
+    <string name="enable_timer_summary">Toggle timer</string>
+    <string name="timer_disabled">Timer disabled</string>
+    <string name="start_game">Start Game</string>
+    <string name="timer_finished">Timer finished</string>
+    <string name="enable_ai">Enable AI</string>
+    <string name="enable_ai_summary">Toggle AI player</string>
+    <string name="ai_player_name">AI player</string>
+    <string name="ai_player">AI \'s</string>
+    <string-array name="players">
+        <item>Player X</item>
+        <item>Player O</item>
+    </string-array>
+    <string-array name="sharing_networks">
+        <item>Facebook</item>
+        <item>Twitter</item>
+        <item>Google+</item>
+    </string-array>
+    <string name="share_via">Share via …</string>
+    <string name="random_click">Random Click</string>
+    <string name="single_player">Single Player</string>
+    <string name="multi_player">Multiplayer</string>
+    <string name="share">Spread the word !</string>
+    <string name="its">It\'s</string>
+    <string name="player_turn">turn</string>
+    <string name="settings_activity">Settings</string>
+    <string name="your">Your</string>
+</resources>
