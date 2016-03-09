@@ -25,6 +25,7 @@ public class BoardActivity extends Activity implements GameEventsListener {
 
     public static final String AI_PLAYER = "ai_player";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
