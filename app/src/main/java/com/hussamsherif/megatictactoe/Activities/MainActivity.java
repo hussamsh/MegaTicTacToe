@@ -3,11 +3,14 @@ package com.hussamsherif.megatictactoe.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
@@ -89,11 +92,12 @@ public class MainActivity extends AppCompatActivity {
         if (!sharedPreferences.getBoolean("hasVisited" , false)){
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("hasVisited" , true);
-            editor.commit();
+            editor.apply();
             startActivity(new Intent(this, WelcomeActivity.class));
         }
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -107,6 +111,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.about_menu_action_button:
+                new MaterialDialog.Builder(this)
+                        .title(getString(R.string.about))
+                        .contentLineSpacing(1.6f)
+                        .content(Html.fromHtml(getString(R.string.about_summary)))
+                        .build().show();
             default:
                 return false;
         }

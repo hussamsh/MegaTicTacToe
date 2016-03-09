@@ -56,4 +56,11 @@
     <string name="last_welcome_summary">The best way to understand the game is by playing it , so why don\'t you go ahead and Enjoy!</string>
     <string name="start_playing">Start Playing!</string>
     <string name="the_winner_is_you">You are the winner !!</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="about_summary"><![CDATA[
+        <b>Mega Tic Tac Toe</b>, is a game developed by <b>Hossam Sherif</b>.
+         <br> For more information visit the
+        <a href=\'http://github.com/hussamsh/MegaTicTacToe\'>Github page</a>&nbsp;&nbsp;
+    ]]></string>
 </resources>
