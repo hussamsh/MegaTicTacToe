@@ -13,7 +13,7 @@ This is a small project I did in my free time to experince basic gaming programm
 
 ## Was any engines used in the creation of this game ?
 
-None , this is pure android code, see for yourself!
+None , this is pure android code, see for yourself !
 
 ## About the AI 
 
@@ -31,7 +31,7 @@ Just make a pull request and I will gladly consider any contributions
 
 ## Created by
 
-*Hossam Sherif* : hussamshdesigns@gmail.com
+*Hossam Sherif* : hossamshdesigns@gmail.com
 
 ## License
 
