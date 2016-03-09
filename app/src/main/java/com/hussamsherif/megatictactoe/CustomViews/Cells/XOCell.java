@@ -9,6 +9,8 @@ import android.support.annotation.IntDef;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -33,7 +35,6 @@ public class XOCell extends CellGridLayout implements CellParent {
     private XOCellListener parent ;
     private boolean isFull ;
     private boolean isGameEnded;
-    private boolean isEnabled ;
     private int identifier ;
     private int backgroundUnactiveColor;
 
@@ -74,7 +75,6 @@ public class XOCell extends CellGridLayout implements CellParent {
     public void disable(){
         for (Cell cell: cells)
             cell.setIsParentEnabled(false);
-        this.isEnabled = false;
     }
 
     public void enable(){
@@ -84,7 +84,6 @@ public class XOCell extends CellGridLayout implements CellParent {
         }
         for (Cell cell: cells)
             cell.setIsParentEnabled(true);
-        this.isEnabled = true;
     }
 
     public void clear(){

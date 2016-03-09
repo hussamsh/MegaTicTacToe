@@ -57,7 +57,8 @@ public abstract class CellGridLayout extends GridLayout {
                 params.width = cellWidth;
                 if (nextCell instanceof XOCell)
                     params.setMargins(4, 4, 4, 4);
-                else params.setMargins(1, 1, 1, 1);
+                else
+                    params.setMargins(1, 1, 1, 1);
                 params.columnSpec = GridLayout.spec(columnCount);
                 params.rowSpec = GridLayout.spec(rowCount);
                 nextCell.setLayoutParams(params);

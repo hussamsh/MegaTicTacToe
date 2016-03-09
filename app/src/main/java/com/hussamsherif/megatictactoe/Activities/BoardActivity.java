@@ -74,7 +74,7 @@ public class BoardActivity extends Activity implements GameEventsListener {
 
     @Override
     public void onWinnerFound(@Board.Player int winner) {
-        new MaterialDialog.Builder(this)
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
                 .title(this.getString(R.string.winner))
                 .content(this.getString(R.string.winner_player, winner == Board.PLAYER_X ? xPlayerName : oPlayerName))
                 .positiveText(R.string.play_again)
@@ -83,7 +83,14 @@ public class BoardActivity extends Activity implements GameEventsListener {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         gameBoard.restartGame();
                     }
-                }).build().show();
+                });
+
+        if (gameBoard.getAIPlayer() != Board.NONE){
+            if (winner != gameBoard.getAIPlayer())
+                builder.content(this.getString(R.string.the_winner_is_you));
+        }
+
+        builder.build().show();
     }
 
     @Override
