@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.hussamsherif.megatictactoe.CustomViews.Cells.XOCell;
 import com.hussamsherif.megatictactoe.CustomViews.Viewgroups.CellGridLayout;
 import com.hussamsherif.megatictactoe.Interfaces.GameEventsListener;
@@ -144,6 +146,7 @@ public class Board extends CellGridLayout implements XOCellListener {
         if (CURRENT_PLAYER == AI)
             XOCells.get(4).playCellAt(CellPosition.CENTER);
 
+        Answers.getInstance().logCustom(new CustomEvent("New game"));
     }
 
     public void disable(){

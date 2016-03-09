@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.hussamsherif.megatictactoe.CustomViews.Boards.Board;
 import com.hussamsherif.megatictactoe.Interfaces.GameEventsListener;
 import com.hussamsherif.megatictactoe.R;
@@ -86,8 +89,12 @@ public class BoardActivity extends Activity implements GameEventsListener {
                 });
 
         if (gameBoard.getAIPlayer() != Board.NONE){
-            if (winner != gameBoard.getAIPlayer())
+            if (winner != gameBoard.getAIPlayer()){
                 builder.content(this.getString(R.string.the_winner_is_you));
+                Answers.getInstance().logCustom(new CustomEvent("Human Won"));
+            }
+            else
+                Answers.getInstance().logCustom(new CustomEvent("AI Won"));
         }
 
         builder.build().show();

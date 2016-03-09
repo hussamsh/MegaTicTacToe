@@ -11,14 +11,19 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.hussamsherif.megatictactoe.CustomViews.Boards.Board;
 import com.hussamsherif.megatictactoe.R;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         checkIfFirstTime();
         setContentView(R.layout.activity_main);
         RippleView singlePlayerRippleView = (RippleView) findViewById(R.id.single_player_rippleView);
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, BoardActivity.class);
                 intent.putExtra(BoardActivity.AI_PLAYER, Board.PLAYER_O);
                 startActivity(intent);
+                Answers.getInstance().logCustom(new CustomEvent("Single game"));
             }
         });
         RippleView multiPlayerRippleView = (RippleView) findViewById(R.id.multi_player_rippleView);
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(RippleView rippleView) {
                 Intent intent = new Intent(MainActivity.this, BoardActivity.class);
                 startActivity(intent);
+                Answers.getInstance().logCustom(new CustomEvent("MultiPlayer game"));
             }
         });
         multiPlayerRippleView.setRippleDuration(300);

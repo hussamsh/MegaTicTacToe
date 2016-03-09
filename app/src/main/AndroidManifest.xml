@@ -11,12 +11,16 @@
         <activity android:name=".Activities.BoardActivity"></activity>
         <activity
             android:name=".Activities.SettingActivity"
-            android:parentActivityName=".Activities.MainActivity">
+            android:parentActivityName=".Activities.MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.MainActivity" />
         </activity>
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +28,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.WelcomeActivity"
-            android:noHistory="true"></activity>
+            android:noHistory="true">
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+        </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d45e5292757f98afbe7585f6b61a89702c41a48b" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
