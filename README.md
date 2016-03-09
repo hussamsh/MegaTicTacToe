@@ -20,7 +20,7 @@ None , this is pure android code, see for yourself !
 The AI was implemented using a minimax with alpha beta pruning algorithim , even though there are still alot to be done on it and it's still not that natrual to play with but it's suffient for a first release 
 
   Material that I used and inspired me:
-- ["Tic Tac Toe java cas study : "](http://jfhbrook.github.io/2011/11/09/readmes.html) - *The AI is heavily based on the code found here*
+- ["Tic Tac Toe java cas study : "](http://www3.ntu.edu.sg/home/ehchua/programming/java/javagame_tictactoe_ai.html) - *The AI is heavily based on the code found here*
 - ["Understanding the minimax algorthim : "](http://neverstopbuilding.com/minimax) - *Awesome explanation to the minimax algorithim*
 - ["MIT Lecture on Gaming AI programming : "](https://www.youtube.com/watch?v=STjW3eH0Cik) - *Another awesome explanation to minimax and gaming AIs in general*
 
