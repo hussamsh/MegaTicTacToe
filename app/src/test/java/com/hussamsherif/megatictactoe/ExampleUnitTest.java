@@ -1,4 +1,4 @@
-package com.hussamsherif.megatictactoe;
+package com.hussamsherif.ultratictactoe;
 
 import org.junit.Test;
 

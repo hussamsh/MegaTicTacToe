@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mega Tic-tac-toe</string>
+    <string name="app_name">Ultra Tic-Tac-Toe</string>
     <string name="winner">Winner !!</string>
     <string name="draw">Draw</string>
     <string name="winner_player">%1$s is the winner</string>
@@ -34,7 +34,7 @@
     <string name="enable_ai">Enable AI</string>
     <string name="enable_ai_summary">Toggle AI player</string>
     <string name="ai_player_name">AI player</string>
-    <string name="ai_player">AI \'s</string>
+    <string name="ai_player">AI</string>
     <string-array name="players">
         <item>Player X</item>
         <item>Player O</item>

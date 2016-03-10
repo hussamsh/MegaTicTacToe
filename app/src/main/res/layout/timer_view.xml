@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.hussamsherif.megatictactoe.CustomViews.CircularSeekBar
+    <com.hussamsherif.ultratictactoe.CustomViews.CircularSeekBar
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"

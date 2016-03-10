@@ -46,7 +46,7 @@
     </LinearLayout>
 
 
-    <com.hussamsherif.megatictactoe.CustomViews.Boards.Board
+    <com.hussamsherif.ultratictactoe.CustomViews.Boards.Board
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/game_board"/>

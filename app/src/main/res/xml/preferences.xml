@@ -22,31 +22,31 @@
         android:title="@string/colors_category"
         android:key="color_preference_category">
 
-        <com.hussamsherif.megatictactoe.CustomViews.ColorPreference
+        <com.hussamsherif.ultratictactoe.CustomViews.ColorPreference
             android:title="@string/active_cell_color"
             android:key="active_cell_color"
             app:reference="active_cell_color"
             android:persistent="true"/>
 
-        <com.hussamsherif.megatictactoe.CustomViews.ColorPreference
+        <com.hussamsherif.ultratictactoe.CustomViews.ColorPreference
             android:title="@string/odd_cell_color_preference"
             android:key="odd_cell_color_preference"
             app:reference="odd_cell_preference_color"
             android:persistent="true"/>
 
-        <com.hussamsherif.megatictactoe.CustomViews.ColorPreference
+        <com.hussamsherif.ultratictactoe.CustomViews.ColorPreference
             android:title="@string/even_cell_color_preference"
             android:key="even_cell_color_preference"
             app:reference="even_cell_preference_color"
             android:persistent="true"/>
 
-        <com.hussamsherif.megatictactoe.CustomViews.ColorPreference
+        <com.hussamsherif.ultratictactoe.CustomViews.ColorPreference
             android:title="@string/x_color"
             android:key="x_color"
             app:reference="x_color"
             android:persistent="true"/>
 
-        <com.hussamsherif.megatictactoe.CustomViews.ColorPreference
+        <com.hussamsherif.ultratictactoe.CustomViews.ColorPreference
             android:title="@string/o_color"
             android:key="o_color"
             app:reference="o_color"

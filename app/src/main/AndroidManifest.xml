@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hussamsherif.megatictactoe">
+    package="com.hussamsherif.ultratictactoe">
 
     <application
         android:allowBackup="true"
@@ -8,17 +8,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.BoardActivity"></activity>
+        <activity android:name="com.hussamsherif.ultratictactoe.Activities.BoardActivity"></activity>
         <activity
-            android:name=".Activities.SettingActivity"
-            android:parentActivityName=".Activities.MainActivity"
+            android:name="com.hussamsherif.ultratictactoe.Activities.SettingActivity"
+            android:parentActivityName="com.hussamsherif.ultratictactoe.Activities.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.MainActivity" />
+                android:value="com.hussamsherif.ultratictactoe.Activities.MainActivity" />
         </activity>
-        <activity android:name=".Activities.MainActivity"
+        <activity android:name="com.hussamsherif.ultratictactoe.Activities.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.WelcomeActivity"
+        <activity android:name="com.hussamsherif.ultratictactoe.Activities.WelcomeActivity"
             android:noHistory="true">
             android:configChanges="orientation"
             android:screenOrientation="portrait"
