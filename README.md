@@ -1,4 +1,4 @@
-# MegaTicTacToe
+# UltraTicTacToe
 A tic-tac-toe game for android
 
 ![Screenshots](https://raw.githubusercontent.com/hussamsh/MegaTicTacToe/master/Screenshots/screenshot.png)
