@@ -15,7 +15,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.hussamsherif.megatictactoe"
+        applicationId "com.hussamsherif.ultratictactoe"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
