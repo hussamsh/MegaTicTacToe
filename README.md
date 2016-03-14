@@ -7,6 +7,10 @@ A tic-tac-toe game for android
 <img align="middle" alt="Get it on Google Play" src="http://steverichey.github.io/google-play-badge-svg/img/en_get.svg" />
 </a>
 
+<a href="http://www.amazon.com/Hossam-Hassan-UltraTicTacToe/dp/B01CTKKY18/ref=sr_1_1?ie=UTF8&qid=1457935767&sr=8-1&keywords=ultratictactoe">
+<img align="middle" alt="Get it on Amazon play store" src="http://www.bridgesbeyondboundaries.org/images/1433465052_amazon_app_store.png" />
+</a>
+
 ## Motivation
 
 This is a small project I did in my free time to experince basic gaming programming on android.
