@@ -1,7 +1,7 @@
 # Update 20/6/2020
 This application has dependancies that are no longer supported by android, therefore I will archiving this project and keeping it as a reference for anyone who wants to make such a game on android.
 
-I will also be removing it from both the playstore and amazon store
+I will also be removing it from both the playstore and amazon store.
 
 
 
@@ -34,7 +34,7 @@ Just make a pull request and I will gladly consider any contributions
 
 ## Created by
 
-*Hossam Sherif* : hossamshdesigns@gmail.com
+*Hossam Sherif* : hossamsherifmostafa@gmail.com
 
 ## License
 
