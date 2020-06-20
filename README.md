@@ -1,20 +1,14 @@
 # Update 20/6/2020
 This application has dependancies that are no longer supported by android, therefore I will archiving this project and keeping it as a reference for anyone who wants to make such a game on android.
 
+I will also be removing it from both the playstore and amazon store
+
 
 
 # UltraTicTacToe
 A tic-tac-toe game for android
 
 ![Screenshots](https://raw.githubusercontent.com/hussamsh/MegaTicTacToe/master/Screenshots/screenshot.png)
-
-<a href="https://play.google.com/store/apps/details?id=com.hussamsherif.ultratictactoe">
-<img align="middle" alt="Get it on Google Play" src="http://steverichey.github.io/google-play-badge-svg/img/en_get.svg" />
-</a>
-
-<a href="http://www.amazon.com/Hossam-Hassan-UltraTicTacToe/dp/B01CTKKY18/ref=sr_1_1?ie=UTF8&qid=1457935767&sr=8-1&keywords=ultratictactoe">
-<img align="middle" alt="Get it on Amazon play store" src="http://www.bridgesbeyondboundaries.org/images/1433465052_amazon_app_store.png" />
-</a>
 
 ## Motivation
 
