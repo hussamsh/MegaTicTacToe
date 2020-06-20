@@ -1,3 +1,8 @@
+# Update 20/6/2020
+This application has dependancies that are no longer supported by android, therefore I will archiving this project and keeping it as a reference for anyone who wants to make such a game on android.
+
+
+
 # UltraTicTacToe
 A tic-tac-toe game for android
 
